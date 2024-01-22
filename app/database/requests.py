@@ -10,6 +10,7 @@ _sessionmaker = async_sessionmaker(_engine)
 
 async def create_tables():
     async with _engine.begin() as con:
+        await con.run_sync(AsyncTable.metadata.drop_all)
         await con.run_sync(AsyncTable.metadata.create_all)
 
 

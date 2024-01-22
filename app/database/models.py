@@ -45,7 +45,7 @@ class Requests(AsyncTable):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     mit: Mapped[Optional[int]]
-    factory_number: Mapped[Optional[int]]
+    mi: Mapped[Optional[int]]
     requested_by: Mapped[int] = mapped_column(ForeignKey("fgis_bot_users.id"))
     created: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, default=func.now()

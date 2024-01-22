@@ -61,7 +61,7 @@ async def get_phone_handler(message: Message, state: FSMContext):
 async def get_bot_type(message: Message, state: FSMContext):
     match message.text.lower():
         case "а":
-            await state.set_state(UserHandling.waiting_for_factory_number_input)
+            await state.set_state(UserHandling.waiting_for_mi_input)
             await state.set_data({"type": "A"})
             await message.answer("Заводской номер / Буквенно-цифровое обозначение:")
         case "б":
@@ -86,6 +86,9 @@ async def get_mi_input(message: Message, state: FSMContext):
         data = await state.get_data()
         data["mi_number"] = message.text
         await state.set_state(UserHandling.return_to_start)
-        await message.answer(str(await search(data["mi_number"], data["mit_number"])))
+        if data["mit_number"]:
+            await message.answer(str(await search(data["mi_number"], data["mit_number"])))
+        else:
+            await message.answer(str(await search(data["mi_number"])))
         return
     await message.answer("Некорректный ввод")

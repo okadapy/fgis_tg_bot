@@ -1,18 +1,17 @@
 import asyncio
-from aiogram import Bot, Dispatcher
+import multiprocessing
+import subprocess
 from app.database.requests import create_tables
-from app.handlers import router as user_handlers_router
-import config
-
-bot = Bot(config.TG_API_KEY)
-dp = Dispatcher()
-dp.include_routers(user_handlers_router)
+from sys import stdout
 
 
 async def main():
     await create_tables()
-    await dp.start_polling(bot)
+    ap = subprocess.Popen(["python", "start_arshin.py"])
+    qp = subprocess.Popen(["python", "start_quasar.py"])
+
+    qp.wait()
+    ap.wait()
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())

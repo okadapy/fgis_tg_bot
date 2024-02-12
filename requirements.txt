@@ -3,3 +3,6 @@ aiohttp
 sqlalchemy
 loguru
 asyncpg
+python-docx
+pillow
+qrcode[pil]

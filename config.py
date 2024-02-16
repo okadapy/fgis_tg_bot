@@ -1,6 +1,6 @@
 DB_URL = "postgresql+asyncpg://telegram:Dark601529!@109.172.88.252:5432/telegram_bots"
-TG_API_KEY_1 = "6697318182:AAEobnThWuITIzn02Q-JFRH-py6_eu8dSvs"
-TG_API_KEY_2 = "6870634545:AAHYi4uXxKBKhMyid68KzCuqotAL4GSOTwo"
+TG_API_KEY_1 = "6801055838:AAH7wiVaTgyFZN-OuUxxXUf2O1RyyNyTuRc"
+TG_API_KEY_2 = "6334762233:AAHAKmbAfLk2mfdSTzVMEvtV--fzlqIWXxg"
 
 FGIS_API_ENDPOINT = "https://fgis.gost.ru/fundmetrology/eapi/vri"
 

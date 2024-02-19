@@ -12,6 +12,7 @@ makedirs(join("media", "output_files"), exist_ok=True)
 
 async def create_document(data: dict, vri_id: str, add_stamp: bool) -> str:
     doc = docx.Document(join("media", "doc-template.docx"))
+    print(data)
     filename = join(
         "media",
         "output_files",

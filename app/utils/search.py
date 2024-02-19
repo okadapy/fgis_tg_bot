@@ -3,19 +3,28 @@ from bs4 import BeautifulSoup
 import asyncio
 import json
 from config import FGIS_API_ENDPOINT
-
+years = [2024, 2023, 2022, 2021]
 
 async def get_vri_data(str):
     soup = BeautifulSoup(str)
     return soup.get_text()
 
-
 async def search(mi: str, mit: str | None = None) -> (dict, str):
+    for year in years:
+        result = await get(mi, mit, year)
+        await asyncio.sleep(1)
+        if result is None:
+            continue
+
+        return result
+
+
+async def get(mi: str, mit: str | None = None, year: str | None = None) -> (dict, str):
     async with aiohttp.ClientSession() as session:
         if mit is not None:
-            params = {"mi_number": mi, "mit_number": mit}
+            params = {"mi_number": mi, "mit_number": mit, "year": year}
         else:
-            params = {"org_title": 'ООО "КВАЗАР"', "mi_number": mi}
+            params = {"org_title": 'ООО "КВАЗАР"', "mi_number": mi, "year": year}
         async with session.get(FGIS_API_ENDPOINT, params=params) as raw_vri:
             result = await raw_vri.json()
             if not result["result"]["items"]:

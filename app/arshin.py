@@ -99,6 +99,12 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
         mit_title=mit_title,
     )
 
+    if "applicable" in result["vriInfo"].keys():
+        await message.answer(
+            text="Свидетельство найдено, но не является применимым("
+        )
+        return
+
     await message.answer_document(
         FSInputFile(await create_document(result, vri_id, False)),
         caption="Свидетельство найдено!\nДля нового запроса просто новый номер СИ!\nВаш документ:",

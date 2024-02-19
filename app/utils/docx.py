@@ -12,20 +12,36 @@ makedirs(join("media", "output_files"), exist_ok=True)
 
 async def create_document(data: dict, vri_id: str, add_stamp: bool) -> str:
     doc = docx.Document(join("media", "doc-template.docx"))
-    print(data)
-    filename = join(
-        "media",
-        "output_files",
-        data["vriInfo"]["applicable"]["certNum"].replace("/", "_") + ".docx",
-    )
-    qrcode_path = join(
-        "media",
-        "output_files",
-        data["vriInfo"]["applicable"]["certNum"].replace("/", "_") + ".png",
-    )
-    stamp_path = join("media", "stamp.jpg")
-    img = qrcode.make("https://fgis.gost.ru/fundmetrology/cm/results/" + vri_id)
-    img.save(qrcode_path)
+    try: 
+        filename = join(
+            "media",
+            "output_files",
+            data["vriInfo"]["applicable"]["certNum"].replace("/", "_") + ".docx",
+        )
+        qrcode_path = join(
+            "media",
+            "output_files",
+            data["vriInfo"]["applicable"]["certNum"].replace("/", "_") + ".png",
+        )
+        stamp_path = join("media", "stamp.jpg")
+        img = qrcode.make("https://fgis.gost.ru/fundmetrology/cm/results/" + vri_id)
+        img.save(qrcode_path)
+
+    except KeyError as ke:
+        filename = join(
+            "media",
+            "output_files",
+            data["vriInfo"]["inapplicable"]["certNum"].replace("/", "_") + ".docx",
+        )
+        qrcode_path = join(
+            "media",
+            "output_files",
+            data["vriInfo"]["inapplicable"]["certNum"].replace("/", "_") + ".png",
+        )
+        stamp_path = join("media", "stamp.jpg")
+        img = qrcode.make("https://fgis.gost.ru/fundmetrology/cm/results/" + vri_id)
+        img.save(qrcode_path)
+
 
     for table in doc.tables:
         for row in table.rows:
@@ -63,7 +79,7 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool) -> str:
                                     )
                                 else:
                                     paragraph.text = paragraph.text.replace(
-                                        "{vriInfo/applicable}", "не пригодным"
+                                        "{vriInfo/applicable}", "непригодным"
                                     )
                             elif match == "{vriInfo/vriType}":
                                 if data["vriInfo"]["vriType"] == 1:

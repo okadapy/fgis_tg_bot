@@ -131,6 +131,23 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                     )
                                 else:
                                     paragraph.text = ""
+                            elif match == "{poveritel}":
+                                if add_header:
+                                    paragraph.text = paragraph.text.replace (
+                                        "{poveritel}",
+                                        "Жарков С. В."
+                                    )
+                                else:
+                                    paragraph.text = ""
+
+                            elif match == "{metrolog}":
+                                if add_header:
+                                    paragraph.text = paragraph.text.replace (
+                                        "{metrolog}",
+                                        "Жаркова О. С."
+                                    )
+                                else:
+                                    paragraph.text = ""
                             else:
                                 find_tree = (
                                     match.replace("{", "").replace("}", "").split("/")

@@ -10,7 +10,7 @@ basic_re = r"\{[^\s}￼]*\}"
 makedirs(join("media", "output_files"), exist_ok=True)
 
 
-async def create_document(data: dict, vri_id: str, add_stamp: bool) -> str:
+async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header:bool) -> str:
     doc = docx.Document(join("media", "doc-template.docx"))
     try: 
         filename = join(
@@ -108,6 +108,13 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool) -> str:
                                 if add_stamp == True:
                                     run = paragraph.add_run()
                                     run.add_picture(stamp_path, width=Inches(0.5))
+                            if add_header:
+                                if match == "{header_line_1}":
+                                    paragraph.text = paragraph.text.replace("{header_line_1}", 'Общество с ограниченной ответственностью "КВАЗАР"')
+                                elif match == "{header_line_2}":
+                                    paragraph.text = paragraph.text.replace("{header_line_2}", '108823, Москва г, Рязановское п, Знамя Октября п, дом 31,  этаж 1,  пом. 38')
+                                elif match == "{header_line_3}":
+                                    paragraph.text = paragraph.text.replace("{header_line_3}", 'Уникальный номер записи об аккредитации в реестре аккредитованных лиц RA.RU.310696')
                             else:
                                 find_tree = (
                                     match.replace("{", "").replace("}", "").split("/")

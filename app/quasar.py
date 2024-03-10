@@ -64,6 +64,6 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
         {result["miInfo"]["singleMI"]["modification"]}, {result["miInfo"]["singleMI"]["mitypeNumber"]}'
     await new_request(mi=message.text, tg_id=message.from_user.id, mit_title=mit_title)
     await message.answer_document(
-        FSInputFile(await create_document(result, vri_id, True)),
+        FSInputFile(await create_document(result, vri_id, True, True)),
         caption="Свидетельство найдено!\nДля повторного запроса введите Заводской номер.\nВаш документ:",
     )

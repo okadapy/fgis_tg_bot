@@ -106,7 +106,7 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
         return
 
     await message.answer_document(
-        FSInputFile(await create_document(result, vri_id, False)),
+        FSInputFile(await create_document(result, vri_id, False, False)),
         caption="Свидетельство найдено!\nДля нового запроса просто новый номер СИ!\nВаш документ:",
     )
     await state.clear()

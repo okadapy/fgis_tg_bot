@@ -108,4 +108,4 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
         caption="Свидетельство найдено!\nДля нового запроса просто новый номер СИ!\nВаш документ:",
     )
     await state.clear()
-    await state.set_state(UserHandelingStates.get_mit)
+    await state.set_state(UserHandelingStates.get_mi)

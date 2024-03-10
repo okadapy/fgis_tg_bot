@@ -76,7 +76,7 @@ async def get_mit_handler(message: Message, state: FSMContext):
 @router.message(UserHandelingStates.get_mit)
 async def get_mi_state_handler(message: Message, state: FSMContext):
     state_data = await state.get_data()
-    result, vri_id = await search(mit=message.text, mi=state_data["mi"])
+    result, vri_id = await search(mi=message.text, mit=state_data["mi"])
     if result is None:
         await message.answer(
             NO_RESULTS_MESSAGE

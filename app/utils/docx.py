@@ -10,9 +10,9 @@ basic_re = r"\{[^\s}￼]*\}"
 makedirs(join("media", "output_files"), exist_ok=True)
 
 
-async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header:bool) -> str:
+async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) -> str:
     doc = docx.Document(join("media", "doc-template.docx"))
-    try: 
+    try:
         filename = join(
             "media",
             "output_files",
@@ -41,7 +41,6 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header:b
         stamp_path = join("media", "stamp.jpg")
         img = qrcode.make("https://fgis.gost.ru/fundmetrology/cm/results/" + vri_id)
         img.save(qrcode_path)
-
 
     for table in doc.tables:
         for row in table.rows:
@@ -108,13 +107,30 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header:b
                                 if add_stamp == True:
                                     run = paragraph.add_run()
                                     run.add_picture(stamp_path, width=Inches(0.5))
-                            if add_header:
-                                if match == "{header_line_1}":
-                                    paragraph.text = paragraph.text.replace("{header_line_1}", 'Общество с ограниченной ответственностью "КВАЗАР"')
-                                elif match == "{header_line_2}":
-                                    paragraph.text = paragraph.text.replace("{header_line_2}", '108823, Москва г, Рязановское п, Знамя Октября п, дом 31,  этаж 1,  пом. 38')
-                                elif match == "{header_line_3}":
-                                    paragraph.text = paragraph.text.replace("{header_line_3}", 'Уникальный номер записи об аккредитации в реестре аккредитованных лиц RA.RU.310696')
+                            elif match == "{header_line_1}":
+                                if add_header:
+                                    paragraph.text = paragraph.text.replace(
+                                        "{header_line_1}",
+                                        'Общество с ограниченной ответственностью "КВАЗАР"',
+                                    )
+                                else:
+                                    paragraph.text = ""
+                            elif match == "{header_line_2}":
+                                if add_header:
+                                    paragraph.text = paragraph.text.replace(
+                                        "{header_line_2}",
+                                        "108823, Москва г, Рязановское п, Знамя Октября п, дом 31,  этаж 1,  пом. 38",
+                                    )
+                                else:
+                                    paragraph.text = ""
+                            elif match == "{header_line_3}":
+                                if add_header:
+                                    paragraph.text = paragraph.text.replace(
+                                        "{header_line_3}",
+                                        "Уникальный номер записи об аккредитации в реестре аккредитованных лиц RA.RU.310696",
+                                    )
+                                else:
+                                    paragraph.text = ""
                             else:
                                 find_tree = (
                                     match.replace("{", "").replace("}", "").split("/")

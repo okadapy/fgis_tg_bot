@@ -100,9 +100,7 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
     )
 
     if "applicable" not in result["vriInfo"].keys():
-        await message.answer(
-            text="Свидетельство найдено, но не является применимым("
-        )
+        await message.answer(text="Свидетельство найдено, но не является применимым(")
         return
 
     await message.answer_document(

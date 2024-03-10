@@ -3,19 +3,20 @@ from bs4 import BeautifulSoup
 import asyncio
 import json
 from config import FGIS_API_ENDPOINT
+
 years = [2024, 2023, 2022, 2021]
+
 
 async def get_vri_data(str):
     soup = BeautifulSoup(str)
     return soup.get_text()
+
 
 async def search(mi: str, mit: str | None = None) -> (dict, str):
     for year in years:
         result = await get(mi, mit, year)
         await asyncio.sleep(1)
         return result
-
-        
 
 
 async def get(mi: str, mit: str | None = None, year: str | None = None) -> (dict, str):

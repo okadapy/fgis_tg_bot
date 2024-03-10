@@ -16,7 +16,7 @@ async def search(mi: str, mit: str | None = None) -> (dict, str):
     for year in years:
         result = await get(mi, mit, year)
         await asyncio.sleep(1)
-        if any(result[0]["items"]):
+        if result[0] is not None:
             return result
     return (None, None)
 

@@ -37,7 +37,7 @@ async def new_user_start_handler(message: Message, state: FSMContext):
 @router.message(CommandStart())
 async def start_handler(message: Message, state: FSMContext):
     await message.answer("Добрый день!\nДля начала работы пришлите мне номер СИ!")
-    await state.set_state(UserHandelingStates.get_mit)
+    await state.set_state(UserHandelingStates.get_mi)
 
 
 @router.message(UserHandelingStates.get_phone, UserDoesntExist(UserType.ARSHIN))

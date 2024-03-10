@@ -69,8 +69,8 @@ async def get_inn_handler(message: Message, state: FSMContext):
 @router.message(UserHandelingStates.get_mi)
 async def get_mit_handler(message: Message, state: FSMContext):
     await state.set_data({"mi": message.text})
-    await message.answer(GET_MIT_MESSAGE)
-    await state.set_state(UserHandelingStates.get_mi)
+    await message.answer(GET_MI_MESSAGE)
+    await state.set_state(UserHandelingStates.get_mit)
 
 
 @router.message(UserHandelingStates.get_mit)

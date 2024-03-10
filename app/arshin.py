@@ -59,24 +59,24 @@ async def get_inn_handler(message: Message, state: FSMContext):
         await new_user(
             message.from_user, (await state.get_data())["phone"], message.text
         )
-        await message.answer(GET_MIT_MESSAGE)
-        await state.set_state(UserHandelingStates.get_mit)
+        await message.answer(GET_MI_MESSAGE)
+        await state.set_state(UserHandelingStates.get_mi)
 
     else:
         await message.answer(GET_INN_ERROR_MESSAGE)
 
 
-@router.message(UserHandelingStates.get_mit)
+@router.message(UserHandelingStates.get_mi)
 async def get_mit_handler(message: Message, state: FSMContext):
-    await state.set_data({"mit": message.text})
-    await message.answer(GET_MI_MESSAGE)
+    await state.set_data({"mi": message.text})
+    await message.answer(GET_MIT_MESSAGE)
     await state.set_state(UserHandelingStates.get_mi)
 
 
-@router.message(UserHandelingStates.get_mi)
+@router.message(UserHandelingStates.get_mit)
 async def get_mi_state_handler(message: Message, state: FSMContext):
     state_data = await state.get_data()
-    result, vri_id = await search(mi=message.text, mit=state_data["mit"])
+    result, vri_id = await search(mit=message.text, mi=state_data["mi"])
     if result is None:
         await message.answer(
             NO_RESULTS_MESSAGE
@@ -87,15 +87,15 @@ async def get_mi_state_handler(message: Message, state: FSMContext):
             + "\n\n"
             + GET_MI_MESSAGE
         )
-        await state.set_state(UserHandelingStates.get_mit)
+        await state.set_state(UserHandelingStates.get_mi)
         return
 
     mit_title = f'{result["miInfo"]["singleMI"]["mitypeTitle"]} {result["miInfo"]["singleMI"]["mitypeType"]},\
         {result["miInfo"]["singleMI"]["modification"]}, {result["miInfo"]["singleMI"]["mitypeNumber"]}'
     await new_request(
-        mi=message.text,
+        mi=state_data["mi"],
         tg_id=message.from_user.id,
-        mit=state_data["mit"],
+        mit=message.text,
         mit_title=mit_title,
     )
 

@@ -102,7 +102,7 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                 paragraph.text = paragraph.text.replace("{qrCode}", "")
                                 run = paragraph.add_run()
                                 run.add_picture(qrcode_path, width=Inches(0.5))
-                            elif match == "{stamp}" and "2024" in data["vriInfo"]["{vrfDate}"]:
+                            elif match == "{stamp}" and "2024" in data["vriInfo"]["vrfDate"]:
                                 paragraph.text = paragraph.text.replace("{stamp}", "")
                                 if add_stamp == True:
                                     run = paragraph.add_run()

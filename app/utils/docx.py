@@ -98,13 +98,6 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                 paragraph.text = paragraph.text.replace(
                                     "{vriId}", vri_id
                                 )
-                            elif match == "{vrfValue}" and add_header:
-                                paragraph.text = paragraph.text.replace(
-                                    "{vrfValue}", "В полном объеме"
-                                )
-                            elif match == "{vrfFact}":
-                                paragraph.text = ""
-
                             elif match == "{qrCode}":
                                 paragraph.text = paragraph.text.replace("{qrCode}", "")
                                 run = paragraph.add_run()
@@ -135,23 +128,6 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                     paragraph.text = paragraph.text.replace(
                                         "{header_line_3}",
                                         "Уникальный номер записи об аккредитации в реестре аккредитованных лиц RA.RU.310696",
-                                    )
-                                else:
-                                    paragraph.text = ""
-                            elif match == "{poveritel}":
-                                if False:
-                                    paragraph.text = paragraph.text.replace (
-                                        "{poveritel}",
-                                        "Жарков С. В."
-                                    )
-                                else:
-                                    paragraph.text = ""
-
-                            elif match == "{metrolog}":
-                                if False:
-                                    paragraph.text = paragraph.text.replace (
-                                        "{metrolog}",
-                                        "Жаркова О. С."
                                     )
                                 else:
                                     paragraph.text = ""

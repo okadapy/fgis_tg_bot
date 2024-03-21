@@ -1,6 +1,7 @@
 import docx
 from os import makedirs
 from os.path import join
+import datetime
 import re
 import qrcode
 from docx.shared import Inches
@@ -97,12 +98,18 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                 paragraph.text = paragraph.text.replace(
                                     "{vriId}", vri_id
                                 )
+                            elif match == "{vrfValue}" and add_header:
+                                paragraph.text = paragraph.text.replace(
+                                    "{vrfValue}", "В полном объеме"
+                                )
+                            elif match == "{vrfFact}":
+                                paragraph.text = ""
 
                             elif match == "{qrCode}":
                                 paragraph.text = paragraph.text.replace("{qrCode}", "")
                                 run = paragraph.add_run()
                                 run.add_picture(qrcode_path, width=Inches(0.5))
-                            elif match == "{stamp}":
+                            elif match == "{stamp}" and "2024" in data["vriInfo"]["{vrfDate}"]:
                                 paragraph.text = paragraph.text.replace("{stamp}", "")
                                 if add_stamp == True:
                                     run = paragraph.add_run()
@@ -132,7 +139,7 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                 else:
                                     paragraph.text = ""
                             elif match == "{poveritel}":
-                                if add_header:
+                                if False:
                                     paragraph.text = paragraph.text.replace (
                                         "{poveritel}",
                                         "Жарков С. В."
@@ -141,7 +148,7 @@ async def create_document(data: dict, vri_id: str, add_stamp: bool, add_header) 
                                     paragraph.text = ""
 
                             elif match == "{metrolog}":
-                                if add_header:
+                                if False:
                                     paragraph.text = paragraph.text.replace (
                                         "{metrolog}",
                                         "Жаркова О. С."
